@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stellacuity - AI deconvolution and noise reduction</title>
+<meta name="description" content="Stellacuity: AI sharpening (deconvolution) and noise reduction for astronomical images. Windows, mono and colour, FITS / XISF / TIFF. 24-hour free trial (3 saved results).">
+<!--
+  DRAFT (28 Oct 2026) - placeholders to fill in before publishing:
+    DOWNLOAD_URL  - the zip on GitHub Releases
+  (checkout link filled in: Polar)
+  (contact address filled in: support@stellacuity.com - forwarded to Gmail by Cloudflare Email Routing)
+  (site served at stellacuity.com: the CNAME file)
+-->
+<style>
+  :root {
+    --bg: #0d0f1a; --panel: #151726; --card: #1f2235; --line: #2b2f48;
+    --text: #e8eaf5; --muted: #9aa0b8; --accent: #6c63ff; --accent2: #8b84ff; --gold: #e8b84a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+  a { color: var(--accent2); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+  /* top bar */
+  header.top { position: sticky; top: 0; z-index: 10; background: rgba(13,15,26,.88); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-weight: 700; font-size: 22px; color: #fff; text-decoration: none; letter-spacing: .3px; }
+  .logo span { color: var(--accent2); }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 22px; font-size: 15px; }
+  nav a:hover { color: #fff; }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; padding: 90px 0 70px; text-align: center;
+          background: radial-gradient(1200px 500px at 50% -10%, rgba(108,99,255,.28), transparent 70%); }
+  .hero::before { content: ""; position: absolute; inset: 0; opacity: .35; pointer-events: none;
+          background-image: radial-gradient(1px 1px at 12% 30%, #fff, transparent), radial-gradient(1px 1px at 72% 18%, #fff, transparent),
+            radial-gradient(1.5px 1.5px at 40% 70%, #fff, transparent), radial-gradient(1px 1px at 88% 62%, #fff, transparent),
+            radial-gradient(1px 1px at 25% 82%, #fff, transparent), radial-gradient(1.5px 1.5px at 58% 40%, #fff, transparent),
+            radial-gradient(1px 1px at 5% 60%, #fff, transparent), radial-gradient(1px 1px at 95% 35%, #fff, transparent); }
+  .hero h1 { font-size: clamp(36px, 6vw, 60px); margin: 0 0 10px; letter-spacing: -.5px; }
+  .hero p.tag { font-size: clamp(17px, 2.2vw, 21px); color: var(--muted); max-width: 720px; margin: 0 auto 32px; }
+  .buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 14px 28px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 17px; transition: .15s; }
+  .btn.primary { background: var(--accent); color: #fff; box-shadow: 0 6px 24px rgba(108,99,255,.35); }
+  .btn.primary:hover { background: #5a52e0; }
+  .btn.ghost { border: 1px solid var(--gold); color: var(--gold); }
+  .btn.ghost:hover { background: rgba(232,184,74,.1); }
+  .btn.disabled, .btn.disabled:hover { background: #3a3a4a; color: #b8b8c8; box-shadow: none; cursor: default; }
+  .small { color: var(--muted); font-size: 14px; margin-top: 16px; }
+  .beta { display: inline-block; vertical-align: middle; margin-left: 10px; padding: 3px 10px; border-radius: 999px; font-size: 14px;
+          font-weight: 700; letter-spacing: .5px; color: #111; background: var(--gold); }
+  .price { font-size: 44px; font-weight: 700; color: #fff; margin: 4px 0 0; }
+  .price-note { color: var(--gold); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+          margin: 0 0 12px; }
+
+  section { padding: 70px 0; }
+  section h2 { font-size: 32px; margin: 0 0 8px; text-align: center; }
+  section p.lead { color: var(--muted); text-align: center; max-width: 720px; margin: 0 auto 40px; }
+
+  /* before / after */
+  .compare { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: #000; user-select: none; }
+  .compare img { display: block; width: 100%; height: auto; }
+  .compare .after { position: absolute; inset: 0; clip-path: inset(0 0 0 50%); }
+  .compare .handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--gold); pointer-events: none; }
+  .compare .handle::after { content: "\2194"; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+          width: 38px; height: 38px; border-radius: 50%; background: var(--gold); color: #111; font-size: 20px;
+          display: grid; place-items: center; font-weight: 700; }
+  .compare input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+  .compare .label { position: absolute; top: 12px; padding: 3px 10px; border-radius: 6px; font-size: 13px; background: rgba(0,0,0,.6); }
+  .compare .label.l { left: 12px; } .compare .label.r { right: 12px; color: var(--gold); }
+  .compare .frame { position: relative; }
+  .compare .fsbtn { position: absolute; right: 12px; bottom: 12px; z-index: 3; width: 40px; height: 40px; padding: 0;
+          display: grid; place-items: center; border-radius: 8px; border: 1px solid rgba(255,255,255,.3);
+          background: rgba(0,0,0,.6); color: #fff; cursor: pointer; }
+  .compare .fsbtn:hover, .compare .fsbtn:focus-visible { color: var(--gold); border-color: var(--gold); }
+  .compare .fsbtn svg { width: 20px; height: 20px; }
+  /* full screen: the picture as large as the screen allows, the slider still working */
+  .compare.fs { position: fixed; inset: 0; z-index: 1000; border: 0; border-radius: 0; display: grid; place-items: center; }
+  .compare.fs .frame { width: min(100vw, calc(100vh * var(--ar, 1.5))); width: min(100vw, calc(100dvh * var(--ar, 1.5))); }
+  .compare.fs .fsbtn { right: 18px; bottom: 18px; }
+  .examples { display: grid; gap: 34px; }
+  #about p.lead { margin-bottom: 18px; }
+  p.note { text-align: center; max-width: 720px; margin: -24px auto 32px; color: var(--muted); }
+  pre.cli { max-width: 860px; margin: 0 auto 32px; padding: 16px 18px; overflow-x: auto; background: var(--card);
+          border: 1px solid var(--line); border-radius: 12px; color: var(--text); font: 13px/1.6 Consolas, ui-monospace, monospace; }
+  .card code { font: 12.5px Consolas, ui-monospace, monospace; color: var(--gold); white-space: nowrap; }
+  .caption { color: var(--muted); font-size: 14px; margin-top: 8px; text-align: center; }
+
+  .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 860px; margin: -20px auto 40px; }
+  .chips span { padding: 5px 12px; border-radius: 999px; font-size: 14px; color: var(--text); background: var(--card);
+                border: 1px solid var(--line); }
+  .chips span.soon { color: var(--gold); background: transparent; border: 1px dashed var(--gold); font-style: italic; }
+
+  /* features */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; color: #fff; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+  .card .icon { font-size: 26px; margin-bottom: 8px; }
+
+  .shot { border-radius: 12px; border: 1px solid var(--line); width: 100%; height: auto; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  ol.steps { max-width: 760px; margin: 0 auto; padding-left: 22px; }
+  ol.steps li { margin-bottom: 12px; }
+  .panel { background: var(--panel); }
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  @media (max-width: 760px) { .twocol { grid-template-columns: 1fr; } nav a { margin-left: 12px; font-size: 14px; } }
+  @media (max-width: 560px) {      /* phones: the logo above, the five menu items spread out below it */
+    header.top .wrap { flex-wrap: wrap; height: auto; padding-top: 8px; padding-bottom: 8px; row-gap: 6px; }
+    header.top nav { width: 100%; display: flex; justify-content: space-between; }
+    nav a { margin-left: 0; }
+  }
+  .support { text-align: center; }
+  .support .btn { margin-top: 10px; }
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 600; }
+  details p { color: var(--muted); margin: 10px 0 0; }
+  footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--muted); font-size: 14px; }
+  footer p { margin: 6px 0; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#">Stell<span>acuity</span></a>
+    <nav>
+      <a href="#examples">Examples</a>
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+      <a href="#buy">Buy</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Stell<span style="color:var(--accent2)">acuity</span><span class="beta">BETA</span></h1>
+    <p class="tag">AI sharpening (deconvolution) and noise reduction for your astronomical images. Tighter, rounder stars and cleaner
+      backgrounds - measured from your image's own stars, with nothing else to enter.</p>
+    <div class="buttons">
+      <a class="btn primary" href="#download">Try it free for 24 hours</a>
+      <a class="btn ghost" href="#buy">Buy - &pound;10</a>
+    </div>
+    <p class="small">Introductory price of &pound;10, including all future releases of deconvolution and noise reduction.</p>
+    <p class="small">Version 1.0 beta 1 &middot; Windows 10 / 11 &middot; FITS, XISF and TIFF &middot; mono and colour</p>
+  </div>
+</div>
+
+<section id="examples">
+  <div class="wrap">
+    <h2>See the difference</h2>
+    <p class="lead">Drag the slider. Each pair is the same crop of a linear stack, before and after Stellacuity (Sharpen: Normal, then Reduce noise:
+      Normal), shown with the same stretch.</p>
+    <p class="small note">All images taken by John Hawkes, the author of Stellacuity, apart from the final simulated
+      example. Each is a linear master exactly as it
+      came from stacking - no gradient removal and no hand-tuning of any kind; the two colour images have simply been
+      colour calibrated. The only work done on them is Stellacuity's own deconvolution and noise reduction; the stretch
+      is added purely so they can be seen.</p>
+    <div class="examples">
+      <div>
+        <div class="compare">
+          <img src="images/cocoon_before.jpg" loading="lazy" alt="Before: the Cocoon Nebula (IC 5146) in colour">
+          <img class="after" src="images/cocoon_after.jpg" loading="lazy" alt="After Stellacuity: the Cocoon Nebula (IC 5146) in colour">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">The Cocoon Nebula (IC 5146), colour: a dense star field tightened, with the nebula's dark lanes sharper and the noise gone.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/burger_before.jpg" loading="lazy" alt="Before: the Hamburger Galaxy (NGC 3628) in colour">
+          <img class="after" src="images/burger_after.jpg" loading="lazy" alt="After Stellacuity: the Hamburger Galaxy (NGC 3628) in colour">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">The Hamburger Galaxy (NGC 3628), colour: a crisper dust lane and halo, tighter stars, a smoother background.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/m81_before.jpg" loading="lazy" alt="Before: Bode's Galaxy, M81">
+          <img class="after" src="images/m81_after.jpg" loading="lazy" alt="After Stellacuity: Bode's Galaxy, M81">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">M81, Bode's Galaxy: spiral arms and dust lanes sharpen, and the stars tighten.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/m31_before.jpg" loading="lazy" alt="Before: star clouds and dust lanes in the disk of M31">
+          <img class="after" src="images/m31_after.jpg" loading="lazy" alt="After Stellacuity: star clouds and dust lanes in the disk of M31">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">M31, the Andromeda Galaxy: soft star clouds in the disk break up into individual stars, with the dust lanes sharper.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/m101_before.jpg" loading="lazy" alt="Before: the Pinwheel Galaxy, M101">
+          <img class="after" src="images/m101_after.jpg" loading="lazy" alt="After Stellacuity: the Pinwheel Galaxy, M101">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">M101, the Pinwheel Galaxy: knots in the spiral arms and the faint outer arms come through more clearly.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/pickering_before.jpg" loading="lazy" alt="Before: Pickering's Triangle in the Veil Nebula">
+          <img class="after" src="images/pickering_after.jpg" loading="lazy" alt="After Stellacuity: Pickering's Triangle in the Veil Nebula">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">Pickering's Triangle in the Veil Nebula: fine filaments sharpen and the background noise drops away.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/heart_before.jpg" loading="lazy" alt="Before: the Heart Nebula (IC 1805)">
+          <img class="after" src="images/heart_after.jpg" loading="lazy" alt="After Stellacuity: the Heart Nebula (IC 1805)">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">The Heart Nebula (IC 1805): sharper pillars and dark structures, with the star field tightened.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/pacman_before.jpg" loading="lazy" alt="Before: the Pacman Nebula (NGC 281)">
+          <img class="after" src="images/pacman_after.jpg" loading="lazy" alt="After Stellacuity: the Pacman Nebula (NGC 281)">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">The Pacman Nebula (NGC 281): the dark lanes and globules gain edge detail, and the noise drops away.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/crab_before.jpg" loading="lazy" alt="Before: the Crab Nebula, M1">
+          <img class="after" src="images/crab_after.jpg" loading="lazy" alt="After Stellacuity: the Crab Nebula, M1">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">M1, the Crab Nebula: the filaments sharpen and the noisy background cleans up.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/m27_before.jpg" loading="lazy" alt="Before: the Dumbbell Nebula, M27">
+          <img class="after" src="images/m27_after.jpg" loading="lazy" alt="After Stellacuity: the Dumbbell Nebula, M27">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">M27, the Dumbbell Nebula: sharper structure in the nebula and a tighter star field.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/propeller_galaxy_before.jpg" loading="lazy" alt="Before: the Propeller Galaxy (NGC 7479)">
+          <img class="after" src="images/propeller_galaxy_after.jpg" loading="lazy" alt="After Stellacuity: the Propeller Galaxy (NGC 7479)">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">The Propeller Galaxy (NGC 7479): the bar and arms sharpen, and the background noise is cleaned away.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/m13_before.jpg" loading="lazy" alt="Before: the globular cluster M13">
+          <img class="after" src="images/m13_after.jpg" loading="lazy" alt="After Stellacuity: the globular cluster M13">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">M13, the Great Globular Cluster: more individual stars resolved towards the crowded core.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/tadpoles_before.jpg" loading="lazy" alt="Before: the Tadpoles in IC 410">
+          <img class="after" src="images/tadpoles_after.jpg" loading="lazy" alt="After Stellacuity: the Tadpoles in IC 410">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">The Tadpoles in IC 410 (H-alpha): sharper tadpole heads and nebula, with the star field tightened.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/m56_corner_before.jpg" loading="lazy" alt="Before: the corner of an M56 stack with elongated stars">
+          <img class="after" src="images/m56_corner_after.jpg" loading="lazy" alt="After Stellacuity: the corner of an M56 stack with elongated stars">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">Corner of an M56 stack: elongated corner stars become round and tight.</p>
+      </div>
+      <div>
+        <div class="compare">
+          <img src="images/synthetic1_before.jpg" loading="lazy" alt="Before: the corner of a simulated star field with one wave of coma">
+          <img class="after" src="images/synthetic1_after.jpg" loading="lazy" alt="After Stellacuity: the corner of a simulated star field with one wave of coma">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Stellacuity</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after">
+        </div>
+        <p class="caption">Simulation: the corner of a synthetic star field with one full wave of coma, far worse than a typical
+          telescope. Stellacuity measures the comet-shaped stars from the image itself and restores them round and tight.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="panel">
+  <div class="wrap">
+    <h2>What it does</h2>
+    <p class="lead">Trained on over 6 million simulated observations, covering more than 1.5 million different star shapes (point spread functions) - built
+      from these effects, alone and in combination:</p>
+    <div class="chips">
+      <span>Atmospheric seeing</span><span>Defocus &amp; doughnut stars</span><span>Astigmatism</span><span>Coma</span>
+      <span class="soon">Trefoil &amp; higher-order aberrations - coming in future releases</span>
+      <span>Aperture diffraction</span><span>Central obstruction</span><span>Colour-dependent focus</span>
+      <span>Tracking drift</span><span>Periodic error</span><span>Wind shake</span><span>Guiding kicks</span>
+      <span>Stacking softening</span>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="icon">&#10023;</div><h3>Sharpen (deconvolution)</h3>
+        <p>Tightens stars and recovers fine detail. The star shape is measured across your image from its own stars, so tilted or
+          aberrated corners are handled too. Light, Normal, Heavy or Custom.</p></div>
+      <div class="card"><div class="icon">&#9681;</div><h3>Reduce noise</h3>
+        <p>AI noise reduction that leaves stars and faint detail alone - including on a bright sky or nebula background.</p></div>
+      <div class="card"><div class="icon">&#9634;</div><h3>Crop</h3>
+        <p>Cut away stacking edges or empty corners first - drag a rectangle, or let Stellacuity find the empty edges.</p></div>
+      <div class="card"><div class="icon">&#9673;</div><h3>Mono and colour</h3>
+        <p>FITS, XISF and TIFF, straight from stacking. Colour images are processed channel by channel (experimental).</p></div>
+      <div class="card"><div class="icon">&#9889;</div><h3>Any graphics card</h3>
+        <p>Runs on NVIDIA, AMD or Intel graphics (DirectX 12) - or on the processor, more slowly, if there is none.</p></div>
+      <div class="card"><div class="icon">&#8644;</div><h3>Fits your workflow</h3>
+        <p>Saves 32-bit linear FITS or TIFF, ready for stretching in your usual software. Compare with the original at any time,
+          and undo any step.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Simple, step by step</h2>
+    <p class="lead">Load, crop, sharpen, reduce noise, save - with a large zoomable view and "hold to compare" at every step.</p>
+    <img class="shot" src="images/program.jpg" alt="The Stellacuity window: the Cocoon Nebula after noise reduction">
+  </div>
+</section>
+
+<section id="developers">
+  <div class="wrap">
+    <h2>For developers</h2>
+    <p class="lead">Stellacuity can also be driven from your own software. A simple command-line interface exposes the same
+      deconvolution and noise reduction as the window, so imaging suites, scripts and automated pipelines can hand an image
+      to Stellacuity and collect the result - no window, no clicks.</p>
+    <pre class="cli">Stellacuity.exe sharpen INPUT OUTPUT [--preset light|normal|heavy] [--sharpening 1.5-8]
+                [--halos 0-100] [--nonstellar 1.5-8] [--no-protect] [--cpu]
+
+Stellacuity.exe denoise INPUT OUTPUT [--preset light|normal|heavy] [--strength 0-100] [--cpu]</pre>
+    <div class="grid">
+      <div class="card"><h3>Files in, files out</h3>
+        <p>Mono or colour FITS, XISF or TIFF in; 32-bit floating-point FITS or TIFF out (chosen by the output's
+          extension), still linear and ready for the next step of your workflow.</p></div>
+      <div class="card"><h3>Easy to follow</h3>
+        <p>Plain-text progress on standard output - <code>PROGRESS &lt;0-1&gt; &lt;message&gt;</code> and
+          <code>NOTE &lt;message&gt;</code>, ending with <code>DONE &lt;output&gt;</code> or
+          <code>ERROR &lt;message&gt;</code> - with exit code 0 on success, so a progress bar takes a few lines.</p></div>
+      <div class="card"><h3>Licensing</h3>
+        <p>The command line runs on the user's own copy of Stellacuity and uses its licence, so each user needs a
+          Stellacuity licence. During the free trial it shares the trial's 3 saves.</p></div>
+    </div>
+    <p class="small note" style="margin-top:28px">Planning an integration? We'd be glad to hear from you:
+      <a href="mailto:support@stellacuity.com">support@stellacuity.com</a></p>
+  </div>
+</section>
+
+<section id="download" class="panel">
+  <div class="wrap twocol">
+    <div>
+      <h2 style="text-align:left">Download</h2>
+      <p>Try Stellacuity free for 24 hours on your own images - nothing to sign up for - and save up to 3 results. After
+        that, a licence key unlocks it.</p>
+      <p><a class="btn primary disabled" aria-disabled="true">Download available soon</a></p><!-- DOWNLOAD_URL: Download Stellacuity 1.0 beta 1 (Windows, ~470 MB zip) -->
+      <p class="small" style="text-align:left">Windows 10 or 11 (64-bit). A graphics card makes it much faster; 8 GB of memory or more recommended.</p>
+    </div>
+    <div>
+      <h2 style="text-align:left">Install</h2>
+      <ol class="steps">
+        <li>Right-click the downloaded zip &rarr; <b>Extract All&hellip;</b> (don't run it from inside the zip).</li>
+        <li>Open the <b>Stellacuity</b> folder and double-click <b>Stellacuity.exe</b>.</li>
+        <li>If Windows says <i>"Windows protected your PC"</i>, click <b>More info</b> &rarr; <b>Run anyway</b>.
+          Stellacuity is not yet signed with a paid certificate, so Windows doesn't recognise it.</li>
+        <li>Load a <b>linear</b> (unstretched) image straight from stacking and follow the steps.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="buy">
+  <div class="wrap support">
+    <h2>Buy Stellacuity</h2>
+    <p class="price">&pound;10</p>
+    <p class="price-note">Introductory price</p>
+    <p class="lead">One-off payment at the introductory price - buy now and every future release is yours at no extra
+      cost, even if the price rises later.  Your licence key arrives by email straight
+      away: enter it in Stellacuity (step 1, "Enter licence key") - it is activated once online, then works offline.</p>
+    <a class="btn primary" href="https://buy.polar.sh/polar_cl_DJpQJamKiNtvupUHyth26iZKbpzMpl4KPVbvK0OHKRJ">Buy a licence - &pound;10</a>
+    <p class="small"><strong>Includes all future releases of deconvolution and noise reduction.</strong></p>
+    <p class="small">Secure checkout by Polar; VAT handled for you.</p>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="wrap" style="max-width:820px">
+    <h2>Questions</h2>
+    <details><summary>Which images work best?</summary>
+      <p>Linear (unstretched) stacks, straight from your stacking software, before any stretching or other sharpening. Sharpen first, then
+        reduce noise.</p></details>
+    <details><summary>Do I need to enter my telescope, camera or pixel scale?</summary>
+      <p>No. Stellacuity measures the star shape across the image from its own stars.</p></details>
+    <details><summary>Does it work with colour (one-shot colour) images?</summary>
+      <p>Yes, experimentally: each colour channel is sharpened and cleaned separately, so it takes about three times as long. Mono images
+        are the main use for now.</p></details>
+    <details><summary>Is my image uploaded anywhere?</summary>
+      <p>No. Everything runs on your own computer. Stellacuity only goes online once, to activate your licence key.</p></details>
+    <details><summary>How does the trial work?</summary>
+      <p>The full program runs for 24 hours from the first time you start it. You can sharpen, reduce noise and compare as
+        much as you like, and save up to 3 finished results. After that it asks for a licence key; your settings and
+        images are untouched.</p></details>
+    <details><summary>Why "beta"?</summary>
+      <p>Stellacuity works well but is still being improved - feedback is very welcome, and beta buyers get the updates.</p></details>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap" style="max-width:820px">
+    <h2>About</h2>
+    <p class="lead">Stellacuity is made by John Hawkes, an amateur astrophotographer in the United Kingdom.</p>
+    <p class="lead">John studied theoretical physics at the University of Kent in the United Kingdom in the early 1980s, then
+      took a Master of Science in software engineering, specialising in parallel computing. He spent the next twenty years
+      as a software engineer, on work as diverse as computational fluid dynamics, futures-market modelling, operating
+      systems for transputers and a wide range of business applications, before retraining for a career in medicine,
+      where he became a lead MRI radiographer - a working life spent between physics, high-performance software and the
+      art of getting clear images out of difficult data.</p>
+    <p class="lead">Under the night sky, he images from an observatory he built himself in his own garden, where his main
+      instrument is a 12-inch Ritchey-Chr&eacute;tien telescope and much of the equipment runs on firmware he has written
+      himself. Every example on this page is his own data - the same
+      kind of data you bring home from a night under the stars, with all its soft stars, seeing and corner aberrations.</p>
+    <p class="lead">Stellacuity is the result of a long effort to recover the sharpness that the atmosphere and optics take
+      away, while staying true to the data. It is developed and supported by John himself, so questions, suggestions and
+      examples of your own results are always welcome at
+      <a href="mailto:support@stellacuity.com">support@stellacuity.com</a>.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>&copy; 2026 Stellacuity. A licence is for your own personal use; please don't share keys or redistribute the program - link to
+      this page instead. Provided as is, without warranty of any kind.</p>
+    <p>Trained on public Hubble Space Telescope data (NASA / ESA / STScI) - with thanks.</p>
+    <p>Contact: <a href="mailto:support@stellacuity.com">support@stellacuity.com</a></p>
+  </div>
+</footer>
+
+<script>
+  // before / after sliders: the range input moves the clip of the "after" picture and the handle
+  var EXPAND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+  var SHRINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+  function fsElement() { return document.fullscreenElement || document.webkitFullscreenElement; }
+  function openFull(box) {
+    box.classList.add("fs"); document.body.style.overflow = "hidden";
+    box.querySelectorAll("img").forEach(function (i) { i.loading = "eager"; });   // no wait for lazy loading
+    var b = box.querySelector(".fsbtn"); b.innerHTML = SHRINK; b.setAttribute("aria-label", "Exit full screen");
+    var go = box.requestFullscreen || box.webkitRequestFullscreen;     // phones without it keep the page-filling view
+    if (go) { var p = go.call(box); if (p && p.catch) p.catch(function () {}); }
+  }
+  function closeFull(box) {
+    box.classList.remove("fs"); document.body.style.overflow = "";
+    var b = box.querySelector(".fsbtn"); b.innerHTML = EXPAND; b.setAttribute("aria-label", "View full screen");
+    if (fsElement()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+  }
+  document.querySelectorAll(".compare").forEach(function (box) {
+    var frame = document.createElement("div"); frame.className = "frame";     // the picture and its slider, kept together
+    while (box.firstChild) frame.appendChild(box.firstChild);
+    box.appendChild(frame);
+    var img = frame.querySelector("img");
+    function shape() { if (img.naturalWidth) frame.style.setProperty("--ar", img.naturalWidth / img.naturalHeight); }
+    if (img.complete) shape(); img.addEventListener("load", shape);
+    var input = frame.querySelector("input"), after = frame.querySelector(".after"), handle = frame.querySelector(".handle");
+    function set() { var v = input.value; after.style.clipPath = "inset(0 0 0 " + v + "%)"; handle.style.left = v + "%"; }
+    input.addEventListener("input", set); set();
+    var btn = document.createElement("button"); btn.type = "button"; btn.className = "fsbtn";
+    btn.innerHTML = EXPAND; btn.setAttribute("aria-label", "View full screen"); btn.title = "Full screen";
+    btn.addEventListener("click", function () { box.classList.contains("fs") ? closeFull(box) : openFull(box); });
+    box.appendChild(btn);
+  });
+  function leftFull() {            // Esc or the browser's own exit: put the page back
+    if (!fsElement()) document.querySelectorAll(".compare.fs").forEach(closeFull);
+  }
+  document.addEventListener("fullscreenchange", leftFull);
+  document.addEventListener("webkitfullscreenchange", leftFull);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") document.querySelectorAll(".compare.fs").forEach(closeFull);
+  });
+</script>
+</body>
+</html>
