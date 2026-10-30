@@ -117,6 +117,8 @@
   details { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; }
   summary { cursor: pointer; font-weight: 600; }
   details p { color: var(--muted); margin: 10px 0 0; }
+  .faq-steps { color: var(--muted); margin: 10px 0 0; }
+  .faq-steps li { margin-bottom: 6px; }
   footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--muted); font-size: 14px; }
   footer p { margin: 6px 0; }
 </style>
@@ -375,7 +377,7 @@ Stellacuity.exe denoise INPUT OUTPUT [--preset light|normal|heavy] [--strength 0
         <li>Open the <b>Stellacuity</b> folder and double-click <b>Stellacuity.exe</b>.</li>
         <li>If Windows says <i>"Windows protected your PC"</i>, click <b>More info</b> &rarr; <b>Run anyway</b>.
           Stellacuity is not yet signed with a paid certificate, so Windows doesn't recognise it.</li>
-        <li>Load a <b>linear</b> (unstretched) image straight from stacking and follow the steps.</li>
+        <li>Load a <b>linear</b> (unstretched) image and follow the steps.</li>
       </ol>
     </div>
   </div>
@@ -400,8 +402,15 @@ Stellacuity.exe denoise INPUT OUTPUT [--preset light|normal|heavy] [--strength 0
   <div class="wrap" style="max-width:820px">
     <h2>Questions</h2>
     <details><summary>Which images work best?</summary>
-      <p>Linear (unstretched) stacks, straight from your stacking software, before any stretching or other sharpening. Sharpen first, then
-        reduce noise.</p></details>
+      <p>Linear (unstretched) stacks, before any stretching or other sharpening. For the best results, work in this order:</p>
+      <ol class="steps faq-steps">
+        <li><b>Crop</b> away the ragged stacking edges.</li>
+        <li><b>Remove the gradient</b>, leaving a small positive background rather than clipping it to zero.</li>
+        <li><b>Colour calibrate</b> colour images, keeping the data linear.</li>
+        <li><b>Sharpen</b> with Stellacuity.</li>
+        <li><b>Reduce noise</b> with Stellacuity.</li>
+        <li><b>Stretch</b> and carry on with your usual creative processing.</li>
+      </ol></details>
     <details><summary>Do I need to enter my telescope, camera or pixel scale?</summary>
       <p>No. Stellacuity measures the star shape across the image from its own stars.</p></details>
     <details><summary>Does it work with colour (one-shot colour) images?</summary>
