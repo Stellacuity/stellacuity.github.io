@@ -7,7 +7,7 @@
 <meta name="description" content="StellAcuity: AI sharpening (deconvolution), star removal and noise reduction for astronomical images. Windows, mono and colour, FITS / XISF / TIFF / JPEG / PNG. 7-day free trial (3 saved results).">
 <!--
   Published at https://stellacuity.com (29 Oct 2026):
-    (download: GitHub Release v1.0.4 - Stellacuity-1.0.4-Windows.zip)
+    (download: GitHub Release v1.1.0 - Stellacuity-1.1.0-Windows.zip)
   (checkout link filled in: Polar)
   (contact address filled in: support@stellacuity.com - forwarded to Gmail by Cloudflare Email Routing)
   (site served at stellacuity.com: the CNAME file)
@@ -32,26 +32,33 @@
   nav a:hover { color: #fff; }
 
   /* hero */
-  .hero { position: relative; overflow: hidden; padding: 90px 0 70px; text-align: center;
+  .hero { position: relative; overflow: hidden; padding: 6px 0 24px; text-align: center;
           background: radial-gradient(1200px 500px at 50% -10%, rgba(108,99,255,.28), transparent 70%); }
   .hero::before { content: ""; position: absolute; inset: 0; opacity: .35; pointer-events: none;
           background-image: radial-gradient(1px 1px at 12% 30%, #fff, transparent), radial-gradient(1px 1px at 72% 18%, #fff, transparent),
             radial-gradient(1.5px 1.5px at 40% 70%, #fff, transparent), radial-gradient(1px 1px at 88% 62%, #fff, transparent),
             radial-gradient(1px 1px at 25% 82%, #fff, transparent), radial-gradient(1.5px 1.5px at 58% 40%, #fff, transparent),
             radial-gradient(1px 1px at 5% 60%, #fff, transparent), radial-gradient(1px 1px at 95% 35%, #fff, transparent); }
-  .hero h1 { font-size: clamp(36px, 6vw, 60px); margin: 0 0 10px; letter-spacing: -.5px; }
+  .hero h1 { font-size: clamp(36px, 6vw, 60px); margin: 0 0 10px; letter-spacing: -.5px; line-height: 1.15; }
   .hero p.tag { font-size: clamp(17px, 2.2vw, 21px); color: var(--muted); max-width: 720px; margin: 0 auto 32px; }
-  /* the opening: the text beside a picture of the program, one above the other on narrow screens */
-  .hero .wrap.hero-grid { max-width: 1320px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 48px;
-                          align-items: center; text-align: left; }
-  .hero-grid p.tag { font-size: clamp(16px, 1.5vw, 19px); margin: 0 0 28px; }
-  .hero-grid .buttons { justify-content: flex-start; }
-  .hero-shot { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line);
-               box-shadow: 0 20px 60px rgba(0,0,0,.55); }
-  @media (max-width: 900px) {
-    .hero .wrap.hero-grid { grid-template-columns: 1fr; text-align: center; gap: 28px; }
-    .hero-grid p.tag { margin: 0 auto 28px; } .hero-grid .buttons { justify-content: center; } .hero-shot { order: -1; }   /* the picture first */
-  }
+  /* the opening (1.1): the name, then the two modes' screenshots side by side (one above the other on narrow screens),
+     then the text and buttons - all centred */
+  .hero .wrap.hero-top { max-width: 1400px; text-align: center; }
+  .hero-shots { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 24px 0 22px; }
+  .hero-shots figure { margin: 0; }
+  .hero-shot { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line);
+               box-shadow: 0 16px 44px rgba(0,0,0,.55); cursor: zoom-in; }
+  .hero-shots figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  .hero-shots figcaption b { color: var(--text); font-weight: 600; }
+  .hero-top p.tag { font-size: clamp(16px, 1.5vw, 19px); max-width: 1040px; margin: 0 auto 22px; }
+  @media (max-width: 760px) { .hero-shots { grid-template-columns: 1fr; gap: 18px; } }
+  /* a pair as wide as the opening's (1400 px page, 20 px sides) though inside a narrower section */
+  .hero-shots.wide { width: min(1360px, calc(100vw - 40px)); margin-left: 50%; transform: translateX(-50%); }
+  /* a screenshot opened full size (click; click again or Esc to close) */
+  .zoom { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center;
+          background: rgba(5, 6, 12, .92); cursor: zoom-out; padding: 2vh 2vw; }
+  .zoom.open { display: flex; }
+  .zoom img { max-width: 100%; max-height: 100%; border-radius: 8px; box-shadow: 0 20px 80px rgba(0,0,0,.7); }
   .buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
   .btn { display: inline-block; padding: 14px 28px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 17px; transition: .15s; }
   .btn.primary { background: var(--accent); color: #fff; box-shadow: 0 6px 24px rgba(108,99,255,.35); }
@@ -66,6 +73,7 @@
           margin: 0 0 12px; }
 
   section { padding: 70px 0; }
+  #examples { padding-top: 26px; }          /* close under the opening's text */
   section h2 { font-size: 32px; margin: 0 0 8px; text-align: center; }
   section p.lead { color: var(--muted); text-align: center; max-width: 720px; margin: 0 auto 40px; }
 
@@ -142,6 +150,7 @@
     <a class="logo" href="#">Stell<span>Acuity</span></a>
     <nav>
       <a href="#examples">Examples</a>
+      <a href="#optics">Optics module</a>
       <a href="#features">Features</a>
       <a href="#download">Download</a>
       <a href="#buy">Buy</a>
@@ -151,27 +160,34 @@
 </header>
 
 <div class="hero">
-  <div class="wrap hero-grid">
-   <div class="hero-text">
+  <div class="wrap hero-top">
     <h1>Stell<span style="color:var(--accent2)">Acuity</span></h1>
+    <div class="hero-shots">
+      <figure><img class="hero-shot" src="images/program_process.jpg?v=1.1" fetchpriority="high" width="1600" height="1019"
+                   alt="StellAcuity's Process mode: the six steps beside a colour nebula image">
+        <figcaption><b>Process module</b> - sharpen, remove stars, reduce noise</figcaption></figure>
+      <figure><img class="hero-shot" src="images/program_optics.jpg?v=1.2" fetchpriority="high" width="1400" height="892"
+                   data-turning="images/program_optics_turning.webp?v=1.0"
+                   alt="StellAcuity's Optics module: every map of a star cluster's optics at once, in 3D, turning">
+        <figcaption><b>Optics module</b> - your optics, mapped</figcaption></figure>
+    </div>
     <p class="tag">AI sharpening (deconvolution), star removal and noise reduction for your astronomical images. Tighter, rounder stars,
       starless nebulae and galaxies, and cleaner backgrounds - measured from your image's own stars, with nothing else to enter.
       Made for the early, linear stage of processing, it slots into the workflow you already have: stretch, colour and finish
-      your image as you always do.</p>
+      your image as you always do.  New in 1.1: the <a href="#optics" style="color:var(--accent2)">Optics module</a> shows how your
+      stars' blur changes across the frame - collimation, tilt and focus at a glance.</p>
     <div class="buttons">
       <a class="btn primary" href="#download">Try it free for 7 days</a>
       <a class="btn ghost" href="#buy">Buy - &pound;15</a>
     </div>
-    <p class="small">Introductory price of &pound;15, including all future releases of deconvolution, star removal and noise reduction.</p>
-    <p class="small">Version 1.0.4 &middot; Windows 10 / 11 &middot; FITS, XISF, TIFF, JPEG and PNG &middot; mono and colour</p>
-   </div>
-   <img class="hero-shot" src="images/program_steps.jpg?v=1.0" fetchpriority="high" alt="The StellAcuity window with a colour nebula image" width="1764" height="1169">
+    <p class="small">Introductory price of &pound;15, including all future releases of deconvolution, star removal, noise reduction and the Optics module.</p>
+    <p class="small">Version 1.1.0 &middot; Windows 10 / 11 &middot; FITS, XISF, TIFF, JPEG and PNG &middot; mono and colour</p>
   </div>
 </div>
 
 <section id="examples">
   <div class="wrap">
-    <h2>See the difference</h2>
+    <h2>Process module - See the difference</h2>
     <p class="lead">Drag the sliders. Each example has buttons above it: <b>Sharpen + denoise</b> shows a crop of a linear stack
       before and after StellAcuity, <b>Remove stars</b> shows that result with its stars removed.</p>
     <p class="small note">All images taken by John Hawkes, the author of StellAcuity. Each is a linear stacked master exactly as it
@@ -296,6 +312,47 @@
   </div>
 </section>
 
+<section id="optics" class="panel">
+  <div class="wrap">
+    <h2>Optics module</h2>
+    <p class="lead">New in 1.1: see how your stars' blur changes across the frame - for collimation, tilt and focus. The Optics module
+      reads the blur from your stars and separates it into its parts - <b>round blur</b> (seeing, guiding and optics), <b>defocus</b>,
+      <b>astigmatism</b> and <b>coma</b> - and shows each one on its own map across the frame, either as a colour plot or as a
+      3D surface you can turn, together with the stars' measured size and real stars beside the model's. It also estimates
+      where the <b>optical centre</b> lies - the point the aberrations grow away from, often not the middle of the frame - and
+      can mark it on every plot. Load a linear image,
+      tell StellAcuity about your telescope, and press <b>Map the optics</b>: a few seconds later every map is on screen at once.
+      Nothing in your image is changed.</p>
+    <div class="hero-shots wide">
+      <figure><img class="shot" src="images/optics_window_2d.jpg?v=1.2" loading="lazy" width="1600" height="870"
+                   alt="The Optics module: every map of a star cluster at once as colour plots, with the optical centre marked">
+        <figcaption><b>Colour plots</b> - every map at once</figcaption></figure>
+      <figure><img class="shot" src="images/optics_window_3d.jpg?v=1.2" loading="lazy" width="1600" height="870"
+                   alt="The Optics module: the same maps as 3D surfaces">
+        <figcaption><b>3D surfaces</b> - the same maps, to turn and tilt</figcaption></figure>
+    </div>
+    <p class="caption">M56 with a 12" RC: the stars grow and stretch towards the right-hand edge, and the optical centre lies left of the middle.</p>
+    <div class="grid" style="margin-top:34px">
+      <div class="card"><div class="icon">&#9638;</div><h3>Every map at once</h3>
+        <p>Round blur, defocus, astigmatism, coma and the stars' size across the frame, real stars beside the stars the map predicts,
+          and where the optical centre is. Double-click any map to see it on its own.</p></div>
+      <div class="card"><div class="icon">&#9651;</div><h3>Turn it in 3D</h3>
+        <p>Any map as a surface you can turn, tilt and zoom - a slope, a saddle or one high corner shows at a glance. Save any view
+          as a picture to share.</p></div>
+      <div class="card"><div class="icon">&#9737;</div><h3>Any telescope, any camera</h3>
+        <p>Refractors and camera lenses, Newtonians, RC, SCT, EdgeHD, Maksutov, RASA and Hyperstar; mono or one-shot colour cameras;
+          broadband or narrowband filters. The telescope is read from your file where it says.</p></div>
+    </div>
+    <div class="hero-shots wide" style="margin-top:34px">
+      <figure><img class="shot" src="images/optics_turning_astigmatism.webp?v=1.0" loading="lazy" width="1100" height="640"
+                   alt="Astigmatism across the frame of M56 as a 3D surface, turning slowly">
+        <figcaption><b>Astigmatism in 3D</b> - lowest in the middle, highest in the right-hand corners; turn it any way you like in the program</figcaption></figure>
+      <figure><img class="shot" src="images/optics_coma.jpg?v=1.1" loading="lazy" alt="Coma across the frame, with arrows showing which way the star tails point" width="1520" height="983">
+        <figcaption><b>Coma on the Tadpoles</b> - the tails point away from a spot above the top edge: the optical centre lies off the frame</figcaption></figure>
+    </div>
+  </div>
+</section>
+
 <section id="features" class="panel">
   <div class="wrap">
     <h2>What it does</h2>
@@ -316,6 +373,9 @@
           then add the stars back - the two add up to your image exactly.</p></div>
       <div class="card"><div class="icon">&#9681;</div><h3>Reduce noise</h3>
         <p>AI noise reduction that leaves stars and faint detail alone - including on a bright sky or nebula background.</p></div>
+      <div class="card"><div class="icon">&#9638;</div><h3>Optics module</h3>
+        <p>Maps of round blur, defocus, astigmatism and coma across the frame, in 2D or 3D, with the optical centre - for collimation,
+          tilt and focus. <a href="#optics" style="color:var(--accent2)">See it</a></p></div>
       <div class="card"><div class="icon">&#9634;</div><h3>Crop</h3>
         <p>Cut away stacking edges or empty corners first - drag a rectangle, or let StellAcuity find the empty edges.</p></div>
       <div class="card"><div class="icon">&#9673;</div><h3>Mono and colour</h3>
@@ -332,7 +392,8 @@
 <section>
   <div class="wrap">
     <h2>Simple, step by step</h2>
-    <p class="lead">Load, crop, sharpen, remove stars, reduce noise, save - with a large zoomable view and "hold to compare" at every step. The numbers are a suggested order, not a fixed one: once an image is loaded, click any step to use it whenever you like - sharpen straight away, skip the crop, or only reduce noise.</p>
+    <p class="lead">Load, crop, sharpen, remove stars, reduce noise, save - with a large zoomable view and "hold to compare" at every step. The numbers are a suggested order, not a fixed one: once an image is loaded, click any step to use it whenever you like - sharpen straight away, skip the crop, or only reduce noise.  Beside the steps,
+      the <b>Optics module</b> maps your optics from the same image.</p>
     <img class="shot" src="images/program.jpg?v=1.0c" loading="lazy" alt="The StellAcuity window with a colour nebula image" width="2000" height="1088">
   </div>
 </section>
@@ -358,7 +419,7 @@
       <h2 style="text-align:left">Download</h2>
       <p>Try StellAcuity free for 7 days on your own images - nothing to sign up for - and save up to 3 results. After
         that, a licence key unlocks it.</p>
-      <p><a class="btn primary" href="https://github.com/Stellacuity/stellacuity.github.io/releases/download/v1.0.4/Stellacuity-1.0.4-Windows.zip">Download StellAcuity 1.0.4 (Windows, 500 MB zip)</a></p>
+      <p><a class="btn primary" href="https://github.com/Stellacuity/stellacuity.github.io/releases/download/v1.1.0/Stellacuity-1.1.0-Windows.zip">Download StellAcuity 1.1.0 (Windows, 560 MB zip)</a></p>
       <p class="extract-note"><b>Important:</b> right-click the downloaded zip and choose <b>Extract All&hellip;</b> first, then run Stellacuity.exe from the extracted folder. Started from inside the zip, it cannot find its own files.</p>
       <p class="small" style="text-align:left">Windows 10 or 11 (64-bit). A graphics card makes it much faster; 8 GB of memory or more recommended.</p>
     </div>
@@ -412,7 +473,12 @@
         PixelMath: <code>starless + stars</code> while both are still linear. Stretched separately, they are usually put back
         together with a screen blend instead.</p></details>
     <details><summary>Do I need to enter my telescope, camera or pixel scale?</summary>
-      <p>No. StellAcuity measures the star shape across the image from its own stars.</p></details>
+      <p>Not to sharpen, remove stars or reduce noise: StellAcuity measures the star shape across the image from its own stars.
+        The Optics module needs to know a little about your telescope - see below.</p></details>
+    <details><summary>What does the Optics module need?</summary>
+      <p>A linear (unstretched) image with a few hundred stars or more - a stacked master is ideal. It needs the pixel scale and
+        your telescope's type, aperture and filter; StellAcuity fills these in from the file when the file records them, and
+        remembers what you enter. It reads the image as loaded (and cropped), before any sharpening, and never changes it.</p></details>
     <details><summary>Does it work with colour (one-shot colour) images?</summary>
       <p>Yes, experimentally: each colour channel is sharpened and cleaned separately, so it takes about three times as long. Mono images
         are the main use for now.</p></details>
@@ -456,6 +522,30 @@
   </div>
 </footer>
 
+<div class="zoom" id="zoom" role="dialog" aria-label="Picture, full size"><img alt=""></div>
+<script>
+// 1.1: a screenshot opened full size - click it; click anywhere or press Esc to close
+(function () {
+  const zoom = document.getElementById("zoom"), big = zoom.querySelector("img");
+  const close = () => { zoom.classList.remove("open"); big.removeAttribute("src"); };
+  document.querySelectorAll(".hero-shot, #optics img.shot").forEach(img => {
+    img.style.cursor = "zoom-in";
+    img.addEventListener("click", () => { big.src = img.currentSrc || img.src; big.alt = img.alt; zoom.classList.add("open"); });
+  });
+  zoom.addEventListener("click", close);
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && zoom.classList.contains("open")) close(); });
+})();
+// 1.1: the Optics module screenshot comes alive - the still shows at once; the turning version (a few MB) is fetched in
+// the background once the page has loaded and swapped in when it is ready (not for visitors who ask for less motion)
+window.addEventListener("load", () => {
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.querySelectorAll("img[data-turning]").forEach(img => {
+    const next = new Image();
+    next.onload = () => { img.src = next.src; };
+    next.src = img.dataset.turning;
+  });
+});
+</script>
 <script>
   // before / after sliders: the range input moves the clip of the "after" picture and the handle
   var EXPAND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
