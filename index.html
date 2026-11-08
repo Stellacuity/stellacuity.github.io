@@ -7,7 +7,7 @@
 <meta name="description" content="StellAcuity: AI sharpening (deconvolution), star removal and noise reduction for astronomical images. Windows, mono and colour, FITS / XISF / TIFF / JPEG / PNG. 7-day free trial (3 saved results).">
 <!--
   Published at https://stellacuity.com (29 Oct 2026):
-    (download: GitHub Release v1.1.1 - Stellacuity-1.1.1-Windows.zip)
+    (download: GitHub Release v1.2.0 - Stellacuity-1.2.0-Windows.zip)
   (checkout link filled in: Polar)
   (contact address filled in: support@stellacuity.com - forwarded to Gmail by Cloudflare Email Routing)
   (site served at stellacuity.com: the CNAME file)
@@ -166,22 +166,22 @@
       <figure><img class="hero-shot" src="images/program_process.jpg?v=1.1" fetchpriority="high" width="1600" height="1019"
                    alt="StellAcuity's Process mode: the six steps beside a colour nebula image">
         <figcaption><b>Process module</b> - sharpen, remove stars, reduce noise</figcaption></figure>
-      <figure><img class="hero-shot" src="images/program_optics.jpg?v=1.3" fetchpriority="high" width="1400" height="892"
-                   data-turning="images/program_optics_turning.webp?v=1.1"
+      <figure><img class="hero-shot" src="images/program_optics.jpg?v=1.4" fetchpriority="high" width="1400" height="892"
+                   data-turning="images/program_optics_turning.webp?v=1.2"
                    alt="StellAcuity's Optics module: every map of a star cluster's optics at once, in 3D, turning">
         <figcaption><b>Optics module</b> - your optics, mapped</figcaption></figure>
     </div>
     <p class="tag">AI sharpening (deconvolution), star removal and noise reduction for your astronomical images. Tighter, rounder stars,
       starless nebulae and galaxies, and cleaner backgrounds - measured from your image's own stars, with nothing else to enter.
       Made for the early, linear stage of processing, it slots into the workflow you already have: stretch, colour and finish
-      your image as you always do.  New in 1.1: the <a href="#optics" style="color:var(--accent2)">Optics module</a> shows how your
-      stars' blur changes across the frame - collimation, tilt and focus at a glance.</p>
+      your image as you always do.  New in 1.2: the <a href="#optics" style="color:var(--accent2)">Optics module</a> has two pages -
+      Tilt &amp; stars, the traditional check from your stars' FWHM and shape, and Aberrations, where a neural network goes further.</p>
     <div class="buttons">
       <a class="btn primary" href="#download">Try it free for 7 days</a>
       <a class="btn ghost" href="#buy">Buy - &pound;15</a>
     </div>
     <p class="small">Introductory price of &pound;15, including all future releases of deconvolution, star removal, noise reduction and the Optics module.</p>
-    <p class="small">Version 1.1.1 &middot; Windows 10 / 11 &middot; FITS, XISF, TIFF, JPEG and PNG &middot; mono and colour</p>
+    <p class="small">Version 1.2.0 &middot; Windows 10 / 11 &middot; FITS, XISF, TIFF, JPEG and PNG &middot; mono and colour</p>
   </div>
 </div>
 
@@ -315,33 +315,34 @@
 <section id="optics" class="panel">
   <div class="wrap">
     <h2>Optics module</h2>
-    <p class="lead">New in 1.1: see how your stars' blur changes across the frame - for collimation, tilt and focus. The Optics module
-      reads the blur from your stars and separates it into its parts - <b>round blur</b> (seeing, guiding and optics), <b>defocus</b>,
-      <b>astigmatism</b> and <b>coma</b> - and shows each one on its own map across the frame, either as a colour plot or as a
-      3D surface you can turn, together with the stars' measured size and real stars beside the model's. It also estimates
-      where the <b>optical centre</b> lies - the point the aberrations grow away from, often not the middle of the frame - and
-      can mark it on every plot. Load a linear image,
-      tell StellAcuity about your telescope, and press <b>Map the optics</b>: a few seconds later every map is on screen at once.
-      Nothing in your image is changed.</p>
+    <p class="lead">See how your stars change across the frame - for tilt, focus and collimation. Load a linear image, tell
+      StellAcuity about your telescope and press <b>Map the optics</b>: a few seconds later every map is on screen at once, as
+      colour plots or as 3D surfaces you can turn. Nothing in your image is changed. The module has two pages:
+      <b>Tilt &amp; stars</b>, the traditional check measured from the stars themselves, and <b>Aberrations</b>, where a neural
+      network goes further.</p>
     <div class="hero-shots wide">
-      <figure><img class="shot" src="images/optics_window_2d.jpg?v=1.3" loading="lazy" width="1600" height="870"
-                   alt="The Optics module: every map of a star cluster at once as colour plots, with the optical centre marked">
-        <figcaption><b>Colour plots</b> - every map at once</figcaption></figure>
-      <figure><img class="shot" src="images/optics_window_3d.jpg?v=1.3" loading="lazy" width="1600" height="870"
-                   alt="The Optics module: the same maps as 3D surfaces">
-        <figcaption><b>3D surfaces</b> - the same maps, to turn and tilt</figcaption></figure>
+      <figure><img class="shot" src="images/optics_tilt_stars.jpg?v=1.0" loading="lazy" width="1600" height="870"
+                   alt="The Optics module's Tilt and stars page: corner stars, corner FWHM, FWHM, ellipticity and tilt maps in 3D, and FWHM by distance">
+        <figcaption><b>Tilt &amp; stars</b> - the traditional check, from the stars' FWHM and shape</figcaption></figure>
+      <figure><img class="shot" src="images/optics_aberrations.jpg?v=1.0" loading="lazy" width="1600" height="870"
+                   alt="The Optics module's Aberrations page: round blur, defocus, astigmatism, coma and sensor tilt as 3D surfaces">
+        <figcaption><b>Aberrations</b> - a neural network separates the blur into its parts</figcaption></figure>
     </div>
     <p class="caption">M56 with a 12" RC: the stars grow and stretch towards the right-hand edge, and the optical centre lies left of the middle.</p>
     <div class="grid" style="margin-top:34px">
-      <div class="card"><div class="icon">&#9638;</div><h3>Every map at once</h3>
-        <p>Round blur, defocus, astigmatism, coma and the stars' size across the frame, real stars beside the stars the map predicts,
-          and where the optical centre is. Double-click any map to see it on its own.</p></div>
-      <div class="card"><div class="icon">&#9651;</div><h3>Turn it in 3D</h3>
-        <p>Any map as a surface you can turn, tilt and zoom - a slope, a saddle or one high corner shows at a glance. Save any view
-          as a picture to share.</p></div>
+      <div class="card"><div class="icon">&#9638;</div><h3>Tilt &amp; stars</h3>
+        <p>The traditional check, measured directly from the geometry of your stars: a star from each corner side by side, each
+          corner's FWHM and the corner spread, FWHM and ellipticity across the frame, the tilt as a flat plane with its corners
+          in arcseconds, and FWHM by distance from the centre - to tell tilt from field curvature or back focus.</p></div>
+      <div class="card"><div class="icon">&#9651;</div><h3>Aberrations</h3>
+        <p>A neural network reads every star's shape and attempts to separate it into individual aberrations - <b>round blur</b>
+          (seeing, guiding and optics), <b>defocus</b>, <b>astigmatism</b> and <b>coma</b> - something measuring FWHM and
+          ellipticity alone cannot do. It shows the sensor's tilt in microns, from the defocus alone, and estimates where the
+          <b>optical centre</b> lies.</p></div>
       <div class="card"><div class="icon">&#9737;</div><h3>Any telescope, any camera</h3>
         <p>Refractors and camera lenses, Newtonians, RC, SCT, EdgeHD, Maksutov, RASA and Hyperstar; mono or one-shot colour cameras;
-          broadband or narrowband filters. The telescope is read from your file where it says.</p></div>
+          broadband or narrowband filters. The telescope is read from your file where it says. Save any view as a picture to
+          share.</p></div>
     </div>
     <div class="hero-shots wide" style="margin-top:34px">
       <figure><img class="shot" src="images/optics_turning_astigmatism.webp?v=1.0" loading="lazy" width="1100" height="640"
@@ -374,8 +375,10 @@
       <div class="card"><div class="icon">&#9681;</div><h3>Reduce noise</h3>
         <p>AI noise reduction that leaves stars and faint detail alone - including on a bright sky or nebula background.</p></div>
       <div class="card"><div class="icon">&#9638;</div><h3>Optics module</h3>
-        <p>Maps of round blur, defocus, astigmatism and coma across the frame, in 2D or 3D, with the optical centre - for collimation,
-          tilt and focus. <a href="#optics" style="color:var(--accent2)">See it</a></p></div>
+        <p>For tilt, focus and collimation. <b>Tilt &amp; stars</b>: the traditional
+          check, measured from the stars' FWHM and shape. <b>Aberrations</b>: a neural network attempts to separate the blur into round blur,
+          defocus, astigmatism and coma, with the sensor tilt in microns and the optical centre.
+          <a href="#optics" style="color:var(--accent2)">See it</a></p></div>
       <div class="card"><div class="icon">&#9634;</div><h3>Crop</h3>
         <p>Cut away stacking edges or empty corners first - drag a rectangle, or let StellAcuity find the empty edges.</p></div>
       <div class="card"><div class="icon">&#9673;</div><h3>Mono and colour</h3>
@@ -419,7 +422,7 @@
       <h2 style="text-align:left">Download</h2>
       <p>Try StellAcuity free for 7 days on your own images - nothing to sign up for - and save up to 3 results. After
         that, a licence key unlocks it.</p>
-      <p><a class="btn primary" href="https://github.com/Stellacuity/stellacuity.github.io/releases/download/v1.1.1/Stellacuity-1.1.1-Windows.zip">Download StellAcuity 1.1.1 (Windows, 560 MB zip)</a></p>
+      <p><a class="btn primary" href="https://github.com/Stellacuity/stellacuity.github.io/releases/download/v1.2.0/Stellacuity-1.2.0-Windows.zip">Download StellAcuity 1.2.0 (Windows, 560 MB zip)</a></p>
       <p class="extract-note"><b>Important:</b> right-click the downloaded zip and choose <b>Extract All&hellip;</b> first, then run Stellacuity.exe from the extracted folder. Started from inside the zip, it cannot find its own files.</p>
       <p class="small" style="text-align:left">Windows 10 or 11 (64-bit). A graphics card makes it much faster; 8 GB of memory or more recommended.</p>
     </div>
