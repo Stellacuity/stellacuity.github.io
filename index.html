@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StellAcuity - AI deconvolution, star removal and noise reduction</title>
+<title>StellAcuity - AI astro image processing</title>
 <meta name="description" content="StellAcuity: AI sharpening (deconvolution), star removal and noise reduction for astronomical images. Windows, mono and colour, FITS / XISF / TIFF / JPEG / PNG. 7-day free trial (3 saved results).">
 <!--
   Published at https://stellacuity.com (29 Oct 2026):
-    (download: GitHub Release v1.2.1 - Stellacuity-1.2.1-Windows.zip)
+    (download: GitHub Release v1.3.0 - Stellacuity-1.3.0-Windows.zip)
   (checkout link filled in: Polar)
   (contact address filled in: support@stellacuity.com - forwarded to Gmail by Cloudflare Email Routing)
   (site served at stellacuity.com: the CNAME file)
@@ -40,6 +40,10 @@
             radial-gradient(1px 1px at 25% 82%, #fff, transparent), radial-gradient(1.5px 1.5px at 58% 40%, #fff, transparent),
             radial-gradient(1px 1px at 5% 60%, #fff, transparent), radial-gradient(1px 1px at 95% 35%, #fff, transparent); }
   .hero h1 { font-size: clamp(36px, 6vw, 60px); margin: 0 0 10px; letter-spacing: -.5px; line-height: 1.15; }
+  /* the name with its strapline beside it (under it on narrow screens) */
+  .hero .title-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 4px 20px; margin: 0 0 10px; }
+  .hero .title-row h1 { margin: 0; }
+  .hero .strapline { font-size: clamp(17px, 2.2vw, 26px); color: var(--muted); font-weight: 400; letter-spacing: .2px; }
   .hero p.tag { font-size: clamp(17px, 2.2vw, 21px); color: var(--muted); max-width: 720px; margin: 0 auto 32px; }
   /* the opening (1.1): the name, then the two modes' screenshots side by side (one above the other on narrow screens),
      then the text and buttons - all centred */
@@ -161,38 +165,61 @@
 
 <div class="hero">
   <div class="wrap hero-top">
-    <h1>Stell<span style="color:var(--accent2)">Acuity</span></h1>
+    <div class="title-row">
+      <h1>Stell<span style="color:var(--accent2)">Acuity</span></h1>
+      <span class="strapline">Image and optics processing for astrophotographers</span>
+    </div>
     <div class="hero-shots">
-      <figure><img class="hero-shot" src="images/program_process.jpg?v=1.1" fetchpriority="high" width="1600" height="1019"
-                   alt="StellAcuity's Process mode: the six steps beside a colour nebula image">
-        <figcaption><b>Process module</b> - sharpen, remove stars, reduce noise</figcaption></figure>
-      <figure><img class="hero-shot" src="images/program_optics.jpg?v=1.5" fetchpriority="high" width="1400" height="892"
-                   data-turning="images/program_optics_turning.webp?v=1.3"
-                   alt="StellAcuity's Optics module: every map of a star cluster's optics at once, in 3D, turning">
-        <figcaption><b>Optics module</b> - your optics, mapped</figcaption></figure>
+      <figure><img class="hero-shot" src="images/top_gradient.jpg?v=1.0" fetchpriority="high" width="1400" height="761"
+                   alt="StellAcuity's Remove gradient step, the image before and after in a split view">
+        <figcaption><b>Remove gradient</b> - light pollution, moonlight and uneven flats</figcaption></figure>
+      <figure><img class="hero-shot" src="images/top_sharpen.jpg?v=1.0" fetchpriority="high" width="1400" height="761"
+                   alt="StellAcuity's Sharpen step: AI deconvolution, before and after in a split view">
+        <figcaption><b>Deconvolution</b> - tighter, rounder stars and sharper detail</figcaption></figure>
+      <figure><img class="hero-shot" src="images/top_stars.jpg?v=1.0" loading="lazy" width="1400" height="761"
+                   alt="StellAcuity's Remove stars step, before and after in a split view">
+        <figcaption><b>Remove stars</b> - starless nebulae and galaxies, the stars kept as an image of their own</figcaption></figure>
+      <figure><img class="hero-shot" src="images/top_denoise.jpg?v=1.0" loading="lazy" width="1400" height="761"
+                   alt="StellAcuity's Reduce noise step, before and after in a split view">
+        <figcaption><b>Reduce noise</b> - cleaner backgrounds, stars and faint detail left as they are</figcaption></figure>
+      <figure><img class="hero-shot" src="images/top_tilt.jpg?v=1.0" loading="lazy" width="1400" height="761"
+                   alt="StellAcuity's Optics module, Tilt and stars page">
+        <figcaption><b>Optics module: Tilt &amp; stars</b> - tilt and focus from your stars' FWHM and shape</figcaption></figure>
+      <figure><img class="hero-shot" src="images/top_aberrations.jpg?v=1.0" loading="lazy" width="1400" height="761"
+                   alt="StellAcuity's Optics module, Aberrations page">
+        <figcaption><b>Optics module: Aberrations</b> - your optics, mapped by a neural network</figcaption></figure>
     </div>
-    <p class="tag">AI sharpening (deconvolution), star removal and noise reduction for your astronomical images. Tighter, rounder stars,
-      starless nebulae and galaxies, and cleaner backgrounds - measured from your image's own stars, with nothing else to enter.
+    <p class="tag">The <a href="#examples" style="color:var(--accent2)">Process module</a> brings deconvolution, gradient removal, star removal and noise reduction to your astronomical images, each done by its own neural network. Tighter, rounder stars,
+      starless nebulae and galaxies, and clean, even backgrounds free of light pollution and gradients - measured from your image's own stars, with nothing else to enter.
       Made for the early, linear stage of processing, it slots into the workflow you already have: stretch, colour and finish
-      your image as you always do.  New in 1.2: the <a href="#optics" style="color:var(--accent2)">Optics module</a> has two pages -
+      your image as you always do.  New in 1.3: Remove gradient, and the stars or the gradient a step took out shown and saved on their own.
+      The <a href="#optics" style="color:var(--accent2)">Optics module</a> has two pages -
       Tilt &amp; stars, the traditional check from your stars' FWHM and shape, and Aberrations, where a neural network goes further.</p>
-    <div class="buttons">
-      <a class="btn primary" href="#download">Try it free for 7 days</a>
-      <a class="btn ghost" href="#buy">Buy - &pound;15</a>
-    </div>
-    <p class="small">Introductory price of &pound;15, including all future releases of deconvolution, star removal, noise reduction and the Optics module.</p>
-    <p class="small">Version 1.2.1 &middot; Windows 10 / 11 &middot; FITS, XISF, TIFF, JPEG and PNG &middot; mono and colour</p>
   </div>
 </div>
 
 <section id="examples">
   <div class="wrap">
     <h2>Process module - See the difference</h2>
-    <p class="lead">Drag the sliders. Each example has buttons above it: <b>Sharpen + denoise</b> shows a crop of a linear stack
+    <p class="lead">Drag the sliders. Each example has buttons above it: <b>Remove gradient</b> shows a whole linear stack before and
+      after its gradient is taken out, <b>Sharpen + denoise</b> shows a crop of a linear stack
       before and after StellAcuity, <b>Remove stars</b> shows that result with its stars removed.</p>
     <p class="small note">All images taken by John Hawkes, the author of StellAcuity. Each is a linear stacked master exactly as it
-      came from stacking; the two colour images have simply been colour calibrated.</p>
+      came from stacking; the two colour images have simply been colour calibrated (the Remove gradient example is shown
+      before any colour calibration, with the green cast of light pollution).</p>
     <div class="examples">
+      <div>
+        <div class="stepbtns" role="group" aria-label="Choose what to compare" data-v="1.0">
+          <button type="button" class="on" data-l="cocoon_gradient_before" data-r="cocoon_gradient_after" data-ll="Before" data-rl="Gradient removed">Remove gradient</button>
+        </div>
+        <div class="compare">
+          <img src="images/cocoon_gradient_before.jpg?v=1.0" loading="lazy" alt="The Cocoon Nebula (IC 5146), whole frame, before the gradient is removed" width="2400" height="1592">
+          <img class="after" src="images/cocoon_gradient_after.jpg?v=1.0" loading="lazy" alt="The Cocoon Nebula (IC 5146), whole frame, after the gradient is removed" width="2400" height="1592">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Gradient removed</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after the chosen step">
+        </div>
+        <p class="caption">The Cocoon Nebula (IC 5146) - light pollution and gradient removed</p>
+      </div>
       <div>
         <div class="stepbtns" role="group" aria-label="Choose what to compare" data-v="1.0c">
           <button type="button" data-l="tadpoles_before" data-r="tadpoles_after" data-ll="Before" data-rl="Sharpened + denoised">Sharpen + denoise</button>
@@ -295,18 +322,6 @@
           <input type="range" min="0" max="100" value="50" aria-label="Before / after the chosen step">
         </div>
         <p class="caption">M13, the Great Globular Cluster</p>
-      </div>
-      <div>
-        <div class="stepbtns" role="group" aria-label="Choose what to compare" data-v="1.0b">
-          <button type="button" class="on" data-l="synthetic1_before" data-r="synthetic1_after" data-ll="Before" data-rl="Sharpened + denoised">Sharpen + denoise</button>
-        </div>
-        <div class="compare">
-          <img src="images/synthetic1_before.jpg?v=1.0b" loading="lazy" alt="A simulated star field with one wave of coma, before the chosen step" width="1243" height="1066">
-          <img class="after" src="images/synthetic1_after.jpg?v=1.0b" loading="lazy" alt="A simulated star field with one wave of coma, after the chosen step" width="1243" height="1066">
-          <div class="handle"></div><span class="label l">Before</span><span class="label r">Sharpened + denoised</span>
-          <input type="range" min="0" max="100" value="50" aria-label="Before / after the chosen step">
-        </div>
-        <p class="caption">A simulated star field with one wave of coma</p>
       </div>
     </div>
   </div>
@@ -422,7 +437,7 @@
       <h2 style="text-align:left">Download</h2>
       <p>Try StellAcuity free for 7 days on your own images - nothing to sign up for - and save up to 3 results. After
         that, a licence key unlocks it.</p>
-      <p><a class="btn primary" href="https://github.com/Stellacuity/stellacuity.github.io/releases/download/v1.2.1/Stellacuity-1.2.1-Windows.zip">Download StellAcuity 1.2.1 (Windows, 560 MB zip)</a></p>
+      <p><a class="btn primary" href="https://github.com/Stellacuity/stellacuity.github.io/releases/download/v1.3.0/Stellacuity-1.3.0-Windows.zip">Download StellAcuity 1.3.0 (Windows, 615 MB zip)</a></p>
       <p class="extract-note"><b>Important:</b> right-click the downloaded zip and choose <b>Extract All&hellip;</b> first, then run Stellacuity.exe from the extracted folder. Started from inside the zip, it cannot find its own files.</p>
       <p class="small" style="text-align:left">Windows 10 or 11 (64-bit). A graphics card makes it much faster; 8 GB of memory or more recommended.</p>
     </div>
