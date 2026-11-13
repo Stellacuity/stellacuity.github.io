@@ -7,7 +7,7 @@
 <meta name="description" content="StellAcuity: AI sharpening (deconvolution), star removal and noise reduction for astronomical images. Windows, mono and colour, FITS / XISF / TIFF / JPEG / PNG. 7-day free trial (3 saved results).">
 <!--
   Published at https://stellacuity.com (29 Oct 2026):
-    (download: GitHub Release v1.3.0 - Stellacuity-1.3.0-Windows.zip)
+    (download: GitHub Release v1.3.1 - Stellacuity-1.3.1-Windows.zip)
   (checkout link filled in: Polar)
   (contact address filled in: support@stellacuity.com - forwarded to Gmail by Cloudflare Email Routing)
   (site served at stellacuity.com: the CNAME file)
@@ -170,7 +170,7 @@
       <span class="strapline">Image and optics processing for astrophotographers</span>
     </div>
     <div class="hero-shots">
-      <figure><img class="hero-shot" src="images/top_gradient.jpg?v=1.0" fetchpriority="high" width="1400" height="761"
+      <figure><img class="hero-shot" src="images/top_gradient.jpg?v=1.1" fetchpriority="high" width="1400" height="761"
                    alt="StellAcuity's Remove gradient step, the image before and after in a split view">
         <figcaption><b>Remove gradient</b> - light pollution, moonlight and uneven flats</figcaption></figure>
       <figure><img class="hero-shot" src="images/top_sharpen.jpg?v=1.0" fetchpriority="high" width="1400" height="761"
@@ -202,23 +202,36 @@
   <div class="wrap">
     <h2>Process module - See the difference</h2>
     <p class="lead">Drag the sliders. Each example has buttons above it: <b>Remove gradient</b> shows a whole linear stack before and
-      after its gradient is taken out, <b>Sharpen + denoise</b> shows a crop of a linear stack
+      after its gradient is taken out, <b>Show gradient</b> the gradient itself, <b>Sharpen + denoise</b> shows a crop of a linear stack
       before and after StellAcuity, <b>Remove stars</b> shows that result with its stars removed.</p>
     <p class="small note">All images taken by John Hawkes, the author of StellAcuity. Each is a linear stacked master exactly as it
-      came from stacking; the two colour images have simply been colour calibrated (the Remove gradient example is shown
+      came from stacking; the two colour images have simply been colour calibrated (the Cocoon Remove gradient example is shown
       before any colour calibration, with the green cast of light pollution).</p>
     <div class="examples">
       <div>
         <div class="stepbtns" role="group" aria-label="Choose what to compare" data-v="1.0">
-          <button type="button" class="on" data-l="cocoon_gradient_before" data-r="cocoon_gradient_after" data-ll="Before" data-rl="Gradient removed">Remove gradient</button>
+          <button type="button" class="on" data-l="california_gradient_before" data-r="california_gradient_after" data-ll="Before" data-rl="Gradient removed">Remove gradient</button>
+          <button type="button" data-l="california_gradient_before" data-r="california_gradient_layer" data-ll="Before" data-rl="The gradient taken out">Show gradient</button>
         </div>
         <div class="compare">
-          <img src="images/cocoon_gradient_before.jpg?v=1.0" loading="lazy" alt="The Cocoon Nebula (IC 5146), whole frame, before the gradient is removed" width="2400" height="1592">
-          <img class="after" src="images/cocoon_gradient_after.jpg?v=1.0" loading="lazy" alt="The Cocoon Nebula (IC 5146), whole frame, after the gradient is removed" width="2400" height="1592">
+          <img src="images/california_gradient_before.jpg?v=1.0" loading="lazy" alt="The California Nebula (NGC 1499), whole frame, before the chosen step" width="2400" height="1800">
+          <img class="after" src="images/california_gradient_after.jpg?v=1.0" loading="lazy" alt="The California Nebula (NGC 1499), whole frame, after the chosen step" width="2400" height="1800">
           <div class="handle"></div><span class="label l">Before</span><span class="label r">Gradient removed</span>
           <input type="range" min="0" max="100" value="50" aria-label="Before / after the chosen step">
         </div>
-        <p class="caption">The Cocoon Nebula (IC 5146) - light pollution and gradient removed</p>
+        <p class="caption">The California Nebula (NGC 1499) - gradient removed</p>
+      </div>
+      <div>
+        <div class="stepbtns" role="group" aria-label="Choose what to compare" data-v="1.1">
+          <button type="button" class="on" data-l="cocoon_gradient_before" data-r="cocoon_gradient_after" data-ll="Before" data-rl="Gradient removed">Remove gradient</button>
+        </div>
+        <div class="compare">
+          <img src="images/cocoon_gradient_before.jpg?v=1.1" loading="lazy" alt="The Cocoon Nebula (IC 5146), whole frame, before the gradient is removed" width="2400" height="1592">
+          <img class="after" src="images/cocoon_gradient_after.jpg?v=1.1" loading="lazy" alt="The Cocoon Nebula (IC 5146), whole frame, after the gradient is removed and the background neutralised" width="2400" height="1592">
+          <div class="handle"></div><span class="label l">Before</span><span class="label r">Gradient removed</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Before / after the chosen step">
+        </div>
+        <p class="caption">The Cocoon Nebula (IC 5146) - light pollution and gradient removed, with background neutralisation for colour images</p>
       </div>
       <div>
         <div class="stepbtns" role="group" aria-label="Choose what to compare" data-v="1.0c">
@@ -437,7 +450,7 @@
       <h2 style="text-align:left">Download</h2>
       <p>Try StellAcuity free for 7 days on your own images - nothing to sign up for - and save up to 3 results. After
         that, a licence key unlocks it.</p>
-      <p><a class="btn primary" href="https://github.com/Stellacuity/stellacuity.github.io/releases/download/v1.3.0/Stellacuity-1.3.0-Windows.zip">Download StellAcuity 1.3.0 (Windows, 615 MB zip)</a></p>
+      <p><a class="btn primary" href="https://github.com/Stellacuity/stellacuity.github.io/releases/download/v1.3.1/Stellacuity-1.3.1-Windows.zip">Download StellAcuity 1.3.1 (Windows, 615 MB zip)</a></p>
       <p class="extract-note"><b>Important:</b> right-click the downloaded zip and choose <b>Extract All&hellip;</b> first, then run Stellacuity.exe from the extracted folder. Started from inside the zip, it cannot find its own files.</p>
       <p class="small" style="text-align:left">Windows 10 or 11 (64-bit). A graphics card makes it much faster; 8 GB of memory or more recommended.</p>
     </div>
