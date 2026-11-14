@@ -566,16 +566,6 @@
   zoom.addEventListener("click", close);
   document.addEventListener("keydown", e => { if (e.key === "Escape" && zoom.classList.contains("open")) close(); });
 })();
-// 1.1: the Optics module screenshot comes alive - the still shows at once; the turning version (a few MB) is fetched in
-// the background once the page has loaded and swapped in when it is ready (not for visitors who ask for less motion)
-window.addEventListener("load", () => {
-  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  document.querySelectorAll("img[data-turning]").forEach(img => {
-    const next = new Image();
-    next.onload = () => { img.src = next.src; };
-    next.src = img.dataset.turning;
-  });
-});
 </script>
 <script>
   // before / after sliders: the range input moves the clip of the "after" picture and the handle
