@@ -44,6 +44,7 @@
   .hero .title-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 4px 20px; margin: 0 0 10px; }
   .hero .title-row h1 { margin: 0; }
   .hero .strapline { font-size: clamp(17px, 2.2vw, 26px); color: var(--muted); font-weight: 400; letter-spacing: .2px; }
+  .hero .motto { font-size: clamp(15px, 1.6vw, 19px); color: var(--accent2); font-style: italic; letter-spacing: .3px; margin: 2px 0 6px; }
   .hero p.tag { font-size: clamp(17px, 2.2vw, 21px); color: var(--muted); max-width: 720px; margin: 0 auto 32px; }
   /* the opening (1.1): the name, then the two modes' screenshots side by side (one above the other on narrow screens),
      then the text and buttons - all centred */
@@ -169,6 +170,7 @@
       <h1>Stell<span style="color:var(--accent2)">Acuity</span></h1>
       <span class="strapline">Image and optics processing for astrophotographers</span>
     </div>
+    <p class="motto">Analytical where possible, neural where necessary.</p>
     <div class="hero-shots">
       <figure><img class="hero-shot" src="images/top_gradient.jpg?v=1.1" fetchpriority="high" width="1400" height="761"
                    alt="StellAcuity's Remove gradient step, the image before and after in a split view">
@@ -546,6 +548,7 @@
 
 <footer>
   <div class="wrap">
+    <p><i>Analytical where possible, neural where necessary.</i></p>
     <p>&copy; 2026 StellAcuity. A licence is for your own personal use; please don't share keys or redistribute the program - link to
       this page instead. Provided as is, without warranty of any kind.</p>
     <p>Trained on public Hubble Space Telescope data (NASA / ESA / STScI) - with thanks.</p>
