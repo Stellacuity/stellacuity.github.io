@@ -7,7 +7,7 @@
 <meta name="description" content="StellAcuity: AI sharpening (deconvolution), star removal and noise reduction for astronomical images. Windows, mono and colour, FITS / XISF / TIFF / JPEG / PNG. 7-day free trial (3 saved results).">
 <!--
   Published at https://stellacuity.com (29 Oct 2026):
-    (download: GitHub Release v1.3.6 - Stellacuity-1.3.6-Windows.zip)
+    (download: GitHub Release v1.4.0 - Stellacuity-1.4.0-Windows.zip)
   (checkout link filled in: Polar)
   (contact address filled in: support@stellacuity.com - forwarded to Gmail by Cloudflare Email Routing)
   (site served at stellacuity.com: the CNAME file)
@@ -110,6 +110,12 @@
   .compare.fs .frame { width: min(100vw, calc(100vh * var(--ar, 1.5))); width: min(100vw, calc(100dvh * var(--ar, 1.5))); }
   .compare.fs .fsbtn { right: 18px; bottom: 18px; }
   .examples { display: grid; gap: 34px; }
+  .blinks { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 960px) { .blinks { grid-template-columns: 1fr 1fr; } }
+  .blinks figure { margin: 0; }
+  .inspect-box { max-width: 900px; margin: 0 auto; }
+  #inspect { padding-top: 10px; }
+  @media (max-width: 700px) { .blinks { grid-template-columns: 1fr; } }
   #about p.lead { margin-bottom: 18px; }
   p.note { text-align: center; max-width: 720px; margin: -24px auto 32px; color: var(--muted); }
   .caption { color: var(--muted); font-size: 14px; margin-top: 8px; text-align: center; }
@@ -174,7 +180,7 @@
     <div class="hero-shots">
       <figure><img class="hero-shot" src="images/top_gradient.jpg?v=1.1" fetchpriority="high" width="1400" height="761"
                    alt="StellAcuity's Remove gradient step, the image before and after in a split view">
-        <figcaption><b>Remove gradient</b> - light pollution, moonlight and uneven flats</figcaption></figure>
+        <figcaption><b>Remove gradient</b> - light pollution, moonlight and uneven flats, found by a neural network: no background sample points to place</figcaption></figure>
       <figure><img class="hero-shot" src="images/top_sharpen.jpg?v=1.0" fetchpriority="high" width="1400" height="761"
                    alt="StellAcuity's Sharpen step: AI deconvolution, before and after in a split view">
         <figcaption><b>Deconvolution</b> - tighter, rounder stars and sharper detail</figcaption></figure>
@@ -191,10 +197,10 @@
                    alt="StellAcuity's Optics module, Aberrations page">
         <figcaption><b>Optics module: Aberrations</b> - your optics, mapped by a neural network</figcaption></figure>
     </div>
-    <p class="tag">The <a href="#examples" style="color:var(--accent2)">Process module</a> brings deconvolution, gradient removal, star removal and noise reduction to your astronomical images, each done by its own neural network. Tighter, rounder stars,
+    <p class="tag">The <a href="#examples" style="color:var(--accent2)">Process module</a> brings deconvolution, gradient removal, <a href="#spikes" style="color:var(--accent2)">diffraction spike removal</a>, star removal and noise reduction to your astronomical images, each done by its own neural network. Tighter, rounder stars,
       starless nebulae and galaxies, and clean, even backgrounds free of light pollution and gradients - measured from your image's own stars, with nothing else to enter.
       Made for the early, linear stage of processing, it slots into the workflow you already have: stretch, colour and finish
-      your image as you always do.  New in 1.3: Remove gradient, and the stars or the gradient a step took out shown and saved on their own.
+      your image as you always do.  Its <a href="#inspect" style="color:var(--accent2)">Inspect display</a> shows banding, dust and seams no stretch reveals.
       The <a href="#optics" style="color:var(--accent2)">Optics module</a> has two pages -
       Tilt &amp; stars, the traditional check from your stars' FWHM and shape, and Aberrations, where a neural network goes further.</p>
   </div>
@@ -342,6 +348,45 @@
   </div>
 </section>
 
+<section id="spikes">
+  <div class="wrap">
+    <h2>Remove spikes</h2>
+    <p class="lead">A neural network takes out the diffraction spikes around bright stars - from a reflector's secondary-mirror
+      vanes, or anything else that draws them - and leaves the stars round, with the faint stars and detail around them untouched.
+      Each picture below switches between before and after.</p>
+    <div class="blinks">
+      <figure><img class="shot" src="images/spikes_ngc891_stars.webp?v=1.2" loading="lazy" width="302" height="400"
+                   alt="Bright stars near NGC 891, switching between with and without their diffraction spikes">
+        <figcaption class="caption">Close up: bright stars in the NGC 891 field</figcaption></figure>
+      <figure><img class="shot" src="images/spikes_cocoon.webp?v=1.2" loading="lazy" width="418" height="563"
+                   alt="The Cocoon Nebula in colour, switching between with and without diffraction spikes">
+        <figcaption class="caption">Close up: the Cocoon Nebula (IC 5146), in colour</figcaption></figure>
+      <figure><img class="shot" src="images/spikes_ngc5985.webp?v=1.1" loading="lazy" width="633" height="829"
+                   alt="NGC 5985 and its star field, switching between with and without diffraction spikes">
+        <figcaption class="caption">NGC 5985</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="inspect">
+  <div class="wrap">
+    <h2>Inspect display</h2>
+    <p class="lead">A view that hides the smooth parts of an image - vignetting, gradients, the sky level - and shows only the fine
+      detail, scaled to the image's own noise. Banding, dust donuts, sensor seams and anything a step left behind stand out
+      where no ordinary stretch shows them. Extremely useful for checking your flats and other calibration frames, but it works
+      on any image - a stack, or the result of any step. Drag the slider.</p>
+    <div class="inspect-box">
+      <div class="compare">
+        <img src="images/inspect_flat_stretch.jpg?v=1.0" loading="lazy" alt="A master flat with an ordinary stretch: a smooth bright centre fading to dark corners" width="1400" height="932">
+        <img class="after" src="images/inspect_flat_inspect.jpg?v=1.0" loading="lazy" alt="The same master flat in the Inspect display: dust donuts, a sensor seam and rings show clearly" width="1400" height="932">
+        <div class="handle"></div><span class="label l">Ordinary stretch</span><span class="label r">Inspect</span>
+        <input type="range" min="0" max="100" value="50" aria-label="Ordinary stretch / Inspect display">
+      </div>
+      <p class="caption">A master flat: the ordinary stretch shows only the vignetting; Inspect shows the dust, a sensor seam and the rings</p>
+    </div>
+  </div>
+</section>
+
 <section id="optics" class="panel">
   <div class="wrap">
     <h2>Optics module</h2>
@@ -399,6 +444,9 @@
       <div class="card"><div class="icon">&#10023;</div><h3>Sharpen (deconvolution)</h3>
         <p>Tightens stars and recovers fine detail. The star shape is measured across your image from its own stars, so tilted or
           aberrated corners are handled too. Light, Normal, Heavy or Custom.</p></div>
+      <div class="card"><div class="icon">&#10010;</div><h3>Remove spikes</h3>
+        <p>Takes the diffraction spikes out of bright stars and leaves them round. Optional, with a strength slider, and the spikes
+          taken out shown on their own. <a href="#spikes" style="color:var(--accent2)">See it</a></p></div>
       <div class="card"><div class="icon">&#10038;</div><h3>Remove stars</h3>
         <p>Takes the stars out of mono or colour images and keeps them as an image of their own: stretch the nebula or galaxy alone,
           then add the stars back - the two add up to your image exactly.</p></div>
@@ -425,7 +473,7 @@
 <section>
   <div class="wrap">
     <h2>Simple, step by step</h2>
-    <p class="lead">Load, crop, sharpen, remove stars, reduce noise, save - with a large zoomable view and "hold to compare" at every step. The numbers are a suggested order, not a fixed one: once an image is loaded, click any step to use it whenever you like - sharpen straight away, skip the crop, or only reduce noise.  Beside the steps,
+    <p class="lead">Load, crop, remove gradient, remove spikes, sharpen, remove stars, reduce noise, save - with a large zoomable view and "hold to compare" at every step. The numbers are a suggested order, not a fixed one: once an image is loaded, click any step to use it whenever you like - sharpen straight away, skip the crop, or only reduce noise.  Beside the steps,
       the <b>Optics module</b> maps your optics from the same image.</p>
     <img class="shot" src="images/program.jpg?v=1.0c" loading="lazy" alt="The StellAcuity window with a colour nebula image" width="2000" height="1088">
   </div>
@@ -453,7 +501,7 @@
       <h2 style="text-align:left">Download</h2>
       <p>Try StellAcuity free for 7 days on your own images - nothing to sign up for - and save up to 3 results. After
         that, a licence key unlocks it.</p>
-      <p><a class="btn primary" href="https://github.com/Stellacuity/stellacuity.github.io/releases/download/v1.3.6/Stellacuity-1.3.6-Windows.zip">Download StellAcuity 1.3.6 (Windows, 615 MB zip)</a></p>
+      <p><a class="btn primary" href="https://github.com/Stellacuity/stellacuity.github.io/releases/download/v1.4.0/Stellacuity-1.4.0-Windows.zip">Download StellAcuity 1.4.0 (Windows, 752 MB zip)</a></p>
       <p class="extract-note"><b>Important:</b> right-click the downloaded zip and choose <b>Extract All&hellip;</b> first, then run Stellacuity.exe from the extracted folder. Started from inside the zip, it cannot find its own files.</p>
       <p class="small" style="text-align:left">Windows 10 or 11 (64-bit). A graphics card makes it much faster; 8 GB of memory or more recommended. Screen: 1280 x 720 or larger (after Windows display scaling).</p>
     </div>
@@ -493,6 +541,7 @@
       <ol class="steps faq-steps">
         <li><b>Crop</b> away the ragged stacking edges.</li>
         <li><b>Remove the gradient</b>, leaving a small positive background rather than clipping it to zero.</li>
+        <li><b>Remove spikes</b> with StellAcuity, if your stars have diffraction spikes.</li>
         <li><b>Colour calibrate</b> colour images, keeping the data linear.</li>
         <li><b>Sharpen</b> with StellAcuity.</li>
         <li><b>Remove stars</b> with StellAcuity, if you want a starless image (and the stars on their own).</li>
@@ -502,7 +551,7 @@
       <p>Already have a stretched image, such as a JPEG or a 16-bit TIFF? Reduce noise works well on those too. Sharpen is
         meant for linear data and may refuse a strongly stretched image, because stretching changes the shape of the stars it measures.</p></details>
     <details><summary>How do I put the stars back after removing them?</summary>
-      <p>Save the stars image as well (step 6). The starless image and the stars image add up to your image exactly, so you can
+      <p>Save the stars image as well (step 8). The starless image and the stars image add up to your image exactly, so you can
         stretch and process the starless image on its own and then add the stars back - in PixInsight, for example, with
         PixelMath: <code>starless + stars</code> while both are still linear. Stretched separately, they are usually put back
         together with a screen blend instead.</p></details>
@@ -512,7 +561,7 @@
     <details><summary>What does the Optics module need?</summary>
       <p>A linear (unstretched) image with a few hundred stars or more - a stacked master is ideal. It needs the pixel scale and
         your telescope's type, aperture and filter; StellAcuity fills these in from the file when the file records them, and
-        remembers what you enter. It reads the image as loaded (and cropped), before any sharpening, and never changes it.</p></details>
+        remembers what you enter. It reads the image as loaded (and cropped), before any sharpening.</p></details>
     <details><summary>Does it work with colour (one-shot colour) images?</summary>
       <p>Yes, experimentally: each colour channel is sharpened and cleaned separately, so it takes about three times as long. Mono images
         are the main use for now.</p></details>
