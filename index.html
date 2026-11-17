@@ -556,8 +556,10 @@
         PixelMath: <code>starless + stars</code> while both are still linear. Stretched separately, they are usually put back
         together with a screen blend instead.</p></details>
     <details><summary>Do I need to enter my telescope, camera or pixel scale?</summary>
-      <p>Not to sharpen, remove stars or reduce noise: StellAcuity measures the star shape across the image from its own stars.
-        The Optics module needs to know a little about your telescope - see below.</p></details>
+      <p>Not to remove gradients or spikes, sharpen, remove stars or reduce noise: StellAcuity measures the star shape across the
+        image from its own stars. The Optics module needs a few details about your telescope and camera, but you will rarely have
+        to type them: wherever your capture software has recorded them in the image's header, StellAcuity reads them from there
+        automatically, and it remembers anything you do enter.</p></details>
     <details><summary>What does the Optics module need?</summary>
       <p>A linear (unstretched) image with a few hundred stars or more - a stacked master is ideal. It needs the pixel scale and
         your telescope's type, aperture and filter; StellAcuity fills these in from the file when the file records them, and
